@@ -6,12 +6,12 @@ const BlackWolfLanding = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // --- RUTA BASE DE GITHUB PAGES (Tu nombre de repositorio) ---
+  // --- RUTA BASE DE GITHUB PAGES ---
   const REPO_BASE = "/blackwolf-web"; 
 
-  // --- RUTAS DE ASSETS (Corregidas para GitHub Pages) ---
-  const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png"; // Asegúrate del nombre
-  const videoUrl = REPO_BASE + "/assets/Video_de_Bienvenida_Blackwolf.mp4"; // Asegúrate del nombre
+  // --- RUTAS DE ASSETS ---
+  const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png";
+  const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
   
   const clientLogos = [
     REPO_BASE + "/assets/images/logos/logo-techcorp.png",
@@ -46,9 +46,9 @@ const BlackWolfLanding = () => {
       {/* --- FONDO GLOBAL UNIFICADO --- */}
       <div className="fixed inset-0 bg-black z-[-5]"></div>
       <div className="fixed inset-0 z-[-4] opacity-40 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-blue-900/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute top-[40%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-900/20 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[40vw] bg-slate-800/20 rounded-full blur-[120px]"></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[80vw] h-[80vw] md:w-[50vw] md:h-[50vw] bg-blue-900/20 rounded-full blur-[80px] md:blur-[120px] animate-pulse"></div>
+        <div className="absolute top-[40%] right-[-10%] w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] bg-indigo-900/20 rounded-full blur-[60px] md:blur-[100px]"></div>
+        <div className="absolute bottom-[-10%] left-[20%] w-[90vw] h-[60vw] md:w-[60vw] md:h-[40vw] bg-slate-800/20 rounded-full blur-[80px] md:blur-[120px]"></div>
       </div>
       <div className="fixed inset-0 z-[-3] opacity-[0.15] pointer-events-none" 
            style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
@@ -87,15 +87,15 @@ const BlackWolfLanding = () => {
       </style>
 
       {/* --- NAVIGATION --- */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent border-transparent py-6'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-black/90 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent border-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3 bg-transparent"> 
              <img 
                src={wolfLogoUrl} 
                alt="BlackWolf Icon" 
-               className="h-12 w-auto opacity-100 bg-transparent" 
+               className="h-10 md:h-12 w-auto opacity-100 bg-transparent" 
              /> 
-            <span className="font-josefin font-bold text-xl tracking-[0.2em] text-metallic">BLACKWOLF</span>
+            <span className="font-josefin font-bold text-lg md:text-xl tracking-[0.2em] text-metallic">BLACKWOLF</span>
           </div>
           <button 
             onClick={() => document.getElementById('application-section').scrollIntoView()}
@@ -103,34 +103,43 @@ const BlackWolfLanding = () => {
           >
             SOLICITAR AUDITORÍA
           </button>
+          {/* Botón móvil simple */}
+          <button 
+             onClick={() => document.getElementById('application-section').scrollIntoView()}
+             className="md:hidden p-2 text-white border border-white/20 rounded-full bg-white/5"
+          >
+            <ArrowRight className="w-5 h-5" />
+          </button>
         </div>
       </nav>
 
-      {/* --- SECTION 1: HERO (Espaciado Generoso) --- */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-32 pb-32 px-6">
-        <div className="max-w-7xl w-full grid lg:grid-cols-12 gap-16 items-center relative z-10">
+      {/* --- SECTION 1: HERO --- */}
+      {/* Ajustado: flex-col en móvil, grid en desktop. Padding reducido en móvil. */}
+      <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-20 md:pt-32 md:pb-32 px-6">
+        <div className="max-w-7xl w-full grid lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
           
-          <div className="lg:col-span-7 flex flex-col gap-8">
+          <div className="lg:col-span-7 flex flex-col gap-6 md:gap-8 text-center lg:text-left">
             <div className="relative">
-              <h2 className="font-josefin font-bold text-slate-400 text-sm md:text-base tracking-[0.3em] mb-6 uppercase flex items-center gap-3">
-                <span className="w-12 h-[1px] bg-gradient-to-r from-slate-500 to-transparent"></span>
+              <h2 className="font-josefin font-bold text-slate-400 text-xs md:text-base tracking-[0.2em] md:tracking-[0.3em] mb-4 md:mb-6 uppercase flex items-center justify-center lg:justify-start gap-3">
+                <span className="w-8 md:w-12 h-[1px] bg-gradient-to-r from-slate-500 to-transparent"></span>
                 Corporate Offensive Security
               </h2>
-              <h1 className="font-josefin font-bold text-5xl md:text-7xl leading-[1.05] uppercase tracking-wide">
+              {/* Texto ajustado para móvil (text-4xl) y desktop (text-7xl) */}
+              <h1 className="font-josefin font-bold text-4xl sm:text-5xl md:text-7xl leading-[1.1] uppercase tracking-wide">
                 <span className="text-white block mb-2 drop-shadow-2xl">Firma de</span>
                 <span className="text-metallic block">Ciberseguridad Ofensiva</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 text-3xl md:text-5xl block mt-4 tracking-wider font-light">Para Entornos Críticos</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 text-2xl sm:text-3xl md:text-5xl block mt-4 tracking-wider font-light">Para Entornos Críticos</span>
               </h1>
             </div>
 
-            <p className="font-inter text-slate-400 text-lg leading-relaxed max-w-2xl font-light pl-6 border-l-2 border-slate-900/50">
+            <p className="font-inter text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl font-light mx-auto lg:mx-0 lg:pl-6 lg:border-l-2 border-slate-900/50">
               Protegemos infraestructuras corporativas y consejos de administración. Nuestro equipo ha reportado vulnerabilidades confirmadas en la <span className="text-white font-semibold border-b border-white/30">NASA</span>.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 mt-6">
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6 mt-4 md:mt-6 w-full sm:w-auto mx-auto lg:mx-0">
               <button 
                 onClick={() => document.getElementById('application-section').scrollIntoView()}
-                className="group px-10 py-4 rounded-full bg-white text-black font-josefin font-bold text-xs tracking-[0.15em] uppercase hover:bg-slate-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] flex items-center justify-center gap-3"
+                className="group w-full sm:w-auto px-8 py-4 rounded-full bg-white text-black font-josefin font-bold text-xs tracking-[0.15em] uppercase hover:bg-slate-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] flex items-center justify-center gap-3"
               >
                 Solicitar Evaluación
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -138,7 +147,8 @@ const BlackWolfLanding = () => {
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative perspective-1000 group">
+          {/* Video en móvil: Se muestra debajo del texto, ancho completo */}
+          <div className="lg:col-span-5 relative perspective-1000 group w-full mt-8 lg:mt-0">
             <div className="relative w-full aspect-video bg-black rounded-xl border border-white/10 overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,1)] transition-all duration-500 group-hover:border-white/30 group-hover:scale-[1.02]">
               <video 
                 src={videoUrl} 
@@ -147,9 +157,9 @@ const BlackWolfLanding = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
               
-              <div className="absolute bottom-6 left-6 z-20 flex items-center gap-2">
-                 <div className="w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
-                <span className="text-[10px] font-mono text-slate-300 uppercase tracking-widest bg-black/60 backdrop-blur px-3 py-1 rounded border border-white/5">
+              <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex items-center gap-2">
+                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-red-500 rounded-full animate-ping"></div>
+                <span className="text-[9px] md:text-[10px] font-mono text-slate-300 uppercase tracking-widest bg-black/60 backdrop-blur px-2 py-1 md:px-3 rounded border border-white/5">
                   LIVE FEED // ENCRYPTED
                 </span>
               </div>
@@ -159,22 +169,23 @@ const BlackWolfLanding = () => {
         </div>
       </section>
 
-      {/* --- SECTION 2: MÉTODO (Aumentado Padding a py-32) --- */}
-      <section className="py-32 relative">
+      {/* --- SECTION 2: MÉTODO --- */}
+      {/* Móvil: py-20 / Desktop: py-32. Cards apiladas en móvil. */}
+      <section className="py-20 md:py-32 relative">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-6 md:gap-8">
             <div className="max-w-2xl">
-              <h2 className="font-josefin font-bold text-4xl md:text-5xl mb-6 leading-tight text-white">
+              <h2 className="font-josefin font-bold text-3xl md:text-5xl mb-4 md:mb-6 leading-tight text-white">
                 INGENIERÍA <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-500">OFENSIVA</span>
               </h2>
-              <p className="font-inter text-slate-400 text-lg leading-relaxed">
+              <p className="font-inter text-slate-400 text-base md:text-lg leading-relaxed">
                 No usamos defensas pasivas. Auditamos su empresa con la misma sofisticación técnica que utilizan los atacantes reales.
               </p>
             </div>
             <div className="hidden md:block w-32 h-[1px] bg-gradient-to-l from-white/20 to-transparent"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
              {[
                { id: "01", title: "Detección Ofensiva", text: "Simulamos vectores de ataque reales antes de que sean explotados.", icon: <Activity className="w-5 h-5" /> },
                { id: "02", title: "Impacto de Negocio", text: "Traducimos vulnerabilidades técnicas a riesgos financieros.", icon: <Zap className="w-5 h-5" /> },
@@ -182,20 +193,20 @@ const BlackWolfLanding = () => {
                { id: "04", title: "Vigilancia Continua", text: "La superficie de ataque cambia. Nuestra vigilancia también.", icon: <Satellite className="w-5 h-5" /> },
                { id: "05", title: "Transparencia", text: "Alcance, metodología y entregables definidos por contrato.", icon: <FileWarning className="w-5 h-5" /> }
              ].map((item, idx) => (
-                <div key={idx} className="glass-card p-8 rounded-2xl transition-all duration-300 group">
+                <div key={idx} className="glass-card p-6 md:p-8 rounded-2xl transition-all duration-300 group">
                   <div className="flex justify-between items-start mb-6">
                     <span className="font-mono text-xs text-slate-500 group-hover:text-slate-400 transition-colors">0{idx + 1}</span>
                     <div className="text-slate-600 group-hover:text-white transition-colors">{item.icon}</div>
                   </div>
-                  <h3 className="font-josefin font-bold text-xl text-slate-200 mb-3 group-hover:text-white">{item.title}</h3>
+                  <h3 className="font-josefin font-bold text-lg md:text-xl text-slate-200 mb-3 group-hover:text-white">{item.title}</h3>
                   <p className="font-inter text-slate-500 text-sm leading-relaxed group-hover:text-slate-400">{item.text}</p>
                 </div>
              ))}
              
              <div className="relative p-[1px] rounded-2xl overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="relative bg-black/80 backdrop-blur-xl p-8 rounded-2xl h-full flex flex-col justify-center items-center text-center">
-                  <Shield className="w-12 h-12 text-slate-500 mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
+                <div className="relative bg-black/80 backdrop-blur-xl p-6 md:p-8 rounded-2xl h-full flex flex-col justify-center items-center text-center">
+                  <Shield className="w-10 h-10 md:w-12 md:h-12 text-slate-500 mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" />
                   <h3 className="font-josefin font-bold text-white text-lg mb-6">¿Su infraestructura resistiría?</h3>
                   <button 
                     onClick={() => document.getElementById('application-section').scrollIntoView()}
@@ -209,19 +220,19 @@ const BlackWolfLanding = () => {
         </div>
       </section>
 
-      {/* --- SECTION 3 & 4 MERGED: (Aumentado Padding a py-32) --- */}
-      <section className="py-32 relative overflow-hidden">
+      {/* --- SECTION 3 & 4: RIESGO & CREDENCIALES --- */}
+      <section className="py-20 md:py-32 relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[30vw] h-[60vh] bg-slate-800/10 blur-[100px] rounded-full -z-10"></div>
 
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-20 items-center mb-24">
+          <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-start md:items-center mb-20 md:mb-24">
             <div>
-              <h2 className="font-josefin font-bold text-3xl md:text-4xl mb-8 text-white">
+              <h2 className="font-josefin font-bold text-3xl md:text-4xl mb-6 md:mb-8 text-white">
                 RIESGO ESTRUCTURAL Y <br/>
                 <span className="text-slate-500">CUMPLIMIENTO</span>
               </h2>
-              <div className="glass-card p-8 rounded-xl border-l-4 border-l-slate-900/50">
-                <p className="font-josefin text-xl text-slate-300 italic mb-6">
+              <div className="glass-card p-6 md:p-8 rounded-xl border-l-4 border-l-slate-900/50">
+                <p className="font-josefin text-lg md:text-xl text-slate-300 italic mb-6">
                   "El coste del cumplimiento es alto, pero el coste del incumplimiento es el cierre."
                 </p>
                 <ul className="space-y-4 font-inter text-slate-400 text-sm">
@@ -242,7 +253,7 @@ const BlackWolfLanding = () => {
                 { number: "ISO", label: "Estándares requeridos para licitaciones." }
               ].map((data, idx) => (
                 <div key={idx} className="glass-card p-6 rounded-lg flex items-center justify-between hover:bg-white/5 transition-colors">
-                  <span className="font-josefin font-bold text-3xl text-white drop-shadow-lg">{data.number}</span>
+                  <span className="font-josefin font-bold text-2xl md:text-3xl text-white drop-shadow-lg">{data.number}</span>
                   <p className="font-inter text-[10px] text-slate-400 uppercase tracking-widest font-semibold text-right">{data.label}</p>
                 </div>
               ))}
@@ -255,7 +266,7 @@ const BlackWolfLanding = () => {
                 <Lock className="w-6 h-6 text-slate-500" />
                 Integridad y Compliance
               </h3>
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                  {[
                   { title: "RGPD / GDPR", desc: "Evitamos brechas y sanciones." },
                   { title: "Directiva NIS2", desc: "Resiliencia operativa asegurada." },
@@ -271,13 +282,13 @@ const BlackWolfLanding = () => {
             </div>
 
             <div className="lg:col-span-6">
-              <div className="glass-card h-full p-8 rounded-2xl relative overflow-hidden group">
+              <div className="glass-card h-full p-6 md:p-8 rounded-2xl relative overflow-hidden group">
                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-[60px] rounded-full group-hover:bg-white/20 transition-all duration-500"></div>
                  
                  <div className="relative z-10">
-                   <div className="flex items-center justify-between mb-8">
+                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                       <h3 className="font-josefin text-2xl text-white font-bold">Capacidad Demostrada</h3>
-                      <div className="px-3 py-1 rounded-full border border-slate-500/30 bg-slate-50/10 text-[10px] font-mono text-slate-300 uppercase tracking-widest">
+                      <div className="self-start sm:self-auto px-3 py-1 rounded-full border border-slate-500/30 bg-slate-50/10 text-[10px] font-mono text-slate-300 uppercase tracking-widest">
                         Verified
                       </div>
                    </div>
@@ -304,16 +315,16 @@ const BlackWolfLanding = () => {
         </div>
       </section>
 
-      {/* --- SECTION 5: FORMULARIO (Mantenido py-32) --- */}
-      <section id="application-section" className="py-32 relative">
+      {/* --- SECTION 5: FORMULARIO --- */}
+      <section id="application-section" className="py-20 md:py-32 relative">
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           
           {!formSubmitted ? (
-            <div className="glass-card rounded-3xl p-10 md:p-14 relative overflow-hidden">
+            <div className="glass-card rounded-3xl p-6 md:p-14 relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
-              <div className="text-center mb-12">
-                <h2 className="font-josefin font-bold text-3xl text-white mb-4">
+              <div className="text-center mb-8 md:mb-12">
+                <h2 className="font-josefin font-bold text-2xl md:text-3xl text-white mb-4">
                   Solicitar Auditoría
                 </h2>
                 <p className="font-inter text-slate-500 text-sm flex justify-center items-center gap-2">
@@ -366,11 +377,11 @@ const BlackWolfLanding = () => {
               </form>
             </div>
           ) : (
-            <div className="glass-card rounded-3xl p-16 text-center shadow-2xl animate-fade-in">
-              <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-green-500/20">
-                <CheckCircle className="w-10 h-10 text-green-400" />
+            <div className="glass-card rounded-3xl p-10 md:p-16 text-center shadow-2xl animate-fade-in">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 border border-green-500/20">
+                <CheckCircle className="w-8 h-8 md:w-10 md:h-10 text-green-400" />
               </div>
-              <h2 className="font-josefin font-bold text-2xl text-white mb-4">Solicitud Registrada</h2>
+              <h2 className="font-josefin font-bold text-xl md:text-2xl text-white mb-4">Solicitud Registrada</h2>
               <p className="font-inter text-slate-400 text-sm max-w-md mx-auto mb-8">
                 Nuestro equipo de análisis de riesgo revisará su perfil y contactará en 24h.
               </p>
@@ -383,14 +394,14 @@ const BlackWolfLanding = () => {
         </div>
       </section>
 
-      {/* --- FOOTER (Aumentado Padding a py-20) --- */}
-      <footer className="py-20 border-t border-white/5 bg-black/40 backdrop-blur-sm relative z-10">
+      {/* --- FOOTER --- */}
+      <footer className="py-12 md:py-20 border-t border-white/5 bg-black/40 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 bg-transparent">
             <img src={wolfLogoUrl} alt="BlackWolf" className="h-6 w-auto bg-transparent" />
             <span className="font-josefin font-bold text-lg tracking-[0.2em] text-white">BLACKWOLF</span>
           </div>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap justify-center gap-8">
             {['Legal', 'Privacidad', 'Contacto'].map((text) => (
                <a key={text} href="#" className="font-inter text-xs text-slate-500 hover:text-white transition-colors uppercase tracking-widest">{text}</a>
             ))}
