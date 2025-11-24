@@ -10,12 +10,12 @@ const BlackWolfLanding = () => {
   const REPO_BASE = "/blackwolf-web"; 
 
   // --- RUTAS DE ASSETS ---
-  const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png";
+  const wolfLogoUrl = REPO_BASE + "/assets/logo.1.png";
   const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
   
   const clientLogos = [
-    REPO_BASE + "/assets/images/logos/logo-techcorp.png",
-    REPO_BASE + "/assets/images/logos/logo-finanzaglobal.png",
+    REPO_BASE + "/assets/images/logos/nasa.webp",
+    REPO_BASE + "/assets/images/logos/uber.webp",
     REPO_BASE + "/assets/images/logos/logo-digitaasystems.png",
     REPO_BASE + "/assets/images/logos/logo-nexustech.png",
     REPO_BASE + "/assets/images/logos/logo-aurorasystems.png",
