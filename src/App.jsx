@@ -6,27 +6,22 @@ const BlackWolfLanding = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-// App.jsx (Bloque de rutas corregido)
+  // --- RUTA BASE DE GITHUB PAGES (Tu nombre de repositorio) ---
+  const REPO_BASE = "/blackwolf-web"; 
 
-const REPO_BASE = "/blackwolf-web";
+  // --- RUTAS DE ASSETS (Corregidas para GitHub Pages) ---
+  const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png"; // Asegúrate del nombre
+  const videoUrl = REPO_BASE + "/assets/Video_de_Bienvenida_Blackwolf.mp4"; // Asegúrate del nombre
+  
+  const clientLogos = [
+    REPO_BASE + "/assets/images/logos/logo-techcorp.png",
+    REPO_BASE + "/assets/images/logos/logo-finanzaglobal.png",
+    REPO_BASE + "/assets/images/logos/logo-digitaasystems.png",
+    REPO_BASE + "/assets/images/logos/logo-nexustech.png",
+    REPO_BASE + "/assets/images/logos/logo-aurorasystems.png",
+    REPO_BASE + "/assets/images/logos/logo-gridforce.png",
+  ];
 
-// --- RUTAS CORREGIDAS ---
-// Estas rutas DEBEN estar correctas para tus archivos en public/assets/
-const wolfLogoUrl = REPO_BASE + "/assets/logo1.png"; 
-const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
- 
-const clientLogos = [
-  // Ruta 1 y 2: Correcto
-  REPO_BASE + "/assets/images/logos/nasa.webp",
-  REPO_BASE + "/assets/images/logos/uber.webp",
- 
-  // Rutas 3, 4, 5 y 6: ¡CORREGIDO! Faltaba REPO_BASE.
-  REPO_BASE + "/assets/images/logos/logo-digitaasystems.png",
-  REPO_BASE + "/assets/images/logos/logo-nexustech.png",
-  REPO_BASE + "/assets/images/logos/logo-aurorasystems.png",
-  REPO_BASE + "/assets/images/logos/logo-gridforce.png",
-];
-// ... El resto del código
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -48,23 +43,16 @@ const clientLogos = [
   return (
     <div className="min-h-screen w-full font-sans text-slate-200 selection:bg-blue-500/30 selection:text-white overflow-x-hidden bg-black relative">
       
-      {/* --- FONDO GLOBAL UNIFICADO (EL SECRETO DEL DISEÑO) --- */}
-      {/* 1. Fondo Base Negro */}
+      {/* --- FONDO GLOBAL UNIFICADO --- */}
       <div className="fixed inset-0 bg-black z-[-5]"></div>
-
-      {/* 2. Orbes de Luz Ambiental (Gradients) que eliminan la sensación plana */}
       <div className="fixed inset-0 z-[-4] opacity-40 pointer-events-none overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-blue-900/20 rounded-full blur-[120px] animate-pulse"></div>
         <div className="absolute top-[40%] right-[-10%] w-[40vw] h-[40vw] bg-indigo-900/20 rounded-full blur-[100px]"></div>
         <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[40vw] bg-slate-800/20 rounded-full blur-[120px]"></div>
       </div>
-
-      {/* 3. Malla Tecnológica (Grid) Sutil */}
       <div className="fixed inset-0 z-[-3] opacity-[0.15] pointer-events-none" 
            style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
       </div>
-
-      {/* 4. Efecto Vignette (Oscurece los bordes para centrar la atención) */}
       <div className="fixed inset-0 z-[-2] pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]"></div>
 
       <style>
@@ -74,7 +62,6 @@ const clientLogos = [
           .font-josefin { font-family: 'Josefin Sans', sans-serif; }
           .font-inter { font-family: 'Inter', sans-serif; }
           
-          /* TEXTO METALIZADO MEJORADO */
           .text-metallic {
             background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 50%, #94A3B8 100%);
             -webkit-background-clip: text;
@@ -82,10 +69,9 @@ const clientLogos = [
             text-shadow: 0px 0px 20px rgba(255,255,255,0.1);
           }
 
-          /* TARJETAS GLASSMORPHISM (Cristal Ahumado) */
           .glass-card {
-            background: rgba(10, 10, 10, 0.4); /* Muy transparente */
-            backdrop-filter: blur(12px); /* Desenfoque del fondo */
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
           }
@@ -93,48 +79,39 @@ const clientLogos = [
           .glass-card:hover {
             background: rgba(20, 20, 20, 0.6);
             border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1); /* Glow azul sutil */
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
           }
 
-          /* ANIMACIÓN SUAVE PARA EL SCROLL */
           html { scroll-behavior: smooth; }
         `}
       </style>
 
       {/* --- NAVIGATION --- */}
-   <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent border-transparent py-6'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-    
-      {/* INICIO DEL BLOQUE AJUSTADO */}
-     <div className="flex items-center gap-3 bg-transparent"> 
-         <img 
-            src={wolfLogoUrl} 
-            alt="BlackWolf Icon" 
-         // h-12 y w-auto para tamaño, **opacity-100** y **bg-transparent** son clave
-            className="h-12 w-auto opacity-100 bg-transparent" 
-         /> 
-      <span className="font-josefin font-bold text-xl tracking-[0.2em] text-metallic">BLACKWOLF</span>
-    </div>
-    {/* FIN DEL BLOQUE AJUSTADO */}
-    
-         <button 
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${isScrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent border-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center gap-3 bg-transparent"> 
+             <img 
+               src={wolfLogoUrl} 
+               alt="BlackWolf Icon" 
+               className="h-12 w-auto opacity-100 bg-transparent" 
+             /> 
+            <span className="font-josefin font-bold text-xl tracking-[0.2em] text-metallic">BLACKWOLF</span>
+          </div>
+          <button 
             onClick={() => document.getElementById('application-section').scrollIntoView()}
             className="hidden md:block px-8 py-3 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-josefin text-xs font-bold tracking-[0.15em] uppercase transition-all duration-300 hover:border-white/30 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
-         >
-         SOLICITAR AUDITORÍA
-         </button>
-      </div>
-   </nav>
+          >
+            SOLICITAR AUDITORÍA
+          </button>
+        </div>
+      </nav>
 
-      {/* --- SECTION 1: HERO (Sin bordes, inmersivo) --- */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center pt-32 pb-20 px-6">
+      {/* --- SECTION 1: HERO (Espaciado Generoso) --- */}
+      <section className="relative min-h-screen flex flex-col justify-center items-center pt-32 pb-32 px-6">
         <div className="max-w-7xl w-full grid lg:grid-cols-12 gap-16 items-center relative z-10">
           
           <div className="lg:col-span-7 flex flex-col gap-8">
             <div className="relative">
-              {/* Elemento decorativo Hexagon ELIMINADO */}
-
-              {/* Subtítulo CORPORATE OFFENSIVE SECURITY A GRIS/PLATA */}
               <h2 className="font-josefin font-bold text-slate-400 text-sm md:text-base tracking-[0.3em] mb-6 uppercase flex items-center gap-3">
                 <span className="w-12 h-[1px] bg-gradient-to-r from-slate-500 to-transparent"></span>
                 Corporate Offensive Security
@@ -161,7 +138,6 @@ const clientLogos = [
             </div>
           </div>
 
-          {/* Video Monitor - Flotando con sombra difusa */}
           <div className="lg:col-span-5 relative perspective-1000 group">
             <div className="relative w-full aspect-video bg-black rounded-xl border border-white/10 overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,1)] transition-all duration-500 group-hover:border-white/30 group-hover:scale-[1.02]">
               <video 
@@ -178,14 +154,13 @@ const clientLogos = [
                 </span>
               </div>
             </div>
-            {/* Glow azul detrás del video (se mantiene para dar profundidad) */}
             <div className="absolute -inset-4 bg-blue-600/10 blur-3xl -z-10 rounded-full opacity-50 group-hover:opacity-75 transition-opacity duration-500"></div>
           </div>
         </div>
       </section>
 
-      {/* --- SECTION 2: MÉTODO (Cards Flotantes, sin cortes de sección) --- */}
-      <section className="py-20 relative">
+      {/* --- SECTION 2: MÉTODO (Aumentado Padding a py-32) --- */}
+      <section className="py-32 relative">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
             <div className="max-w-2xl">
@@ -200,7 +175,6 @@ const clientLogos = [
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-             {/* Cards con efecto Glassmorphism */}
              {[
                { id: "01", title: "Detección Ofensiva", text: "Simulamos vectores de ataque reales antes de que sean explotados.", icon: <Activity className="w-5 h-5" /> },
                { id: "02", title: "Impacto de Negocio", text: "Traducimos vulnerabilidades técnicas a riesgos financieros.", icon: <Zap className="w-5 h-5" /> },
@@ -218,7 +192,6 @@ const clientLogos = [
                 </div>
              ))}
              
-             {/* CTA Card Destacada */}
              <div className="relative p-[1px] rounded-2xl overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative bg-black/80 backdrop-blur-xl p-8 rounded-2xl h-full flex flex-col justify-center items-center text-center">
@@ -236,9 +209,8 @@ const clientLogos = [
         </div>
       </section>
 
-      {/* --- SECTION 3 & 4 MERGED: RIESGO & CREDENCIALES (Layout Asimétrico) --- */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Glow lateral para unir secciones visualmente */}
+      {/* --- SECTION 3 & 4 MERGED: (Aumentado Padding a py-32) --- */}
+      <section className="py-32 relative overflow-hidden">
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[30vw] h-[60vh] bg-slate-800/10 blur-[100px] rounded-full -z-10"></div>
 
         <div className="max-w-7xl mx-auto px-6">
@@ -263,7 +235,6 @@ const clientLogos = [
               </div>
             </div>
 
-            {/* Datos flotantes */}
             <div className="grid gap-4">
               {[
                 { number: "24h", label: "Plazo máximo notificación incidentes (NIS2)." },
@@ -278,7 +249,6 @@ const clientLogos = [
             </div>
           </div>
 
-          {/* CREDENCIALES BLOCK */}
           <div className="grid lg:grid-cols-12 gap-12 pt-12 border-t border-white/5">
             <div className="lg:col-span-6">
               <h3 className="font-josefin text-2xl text-white font-bold mb-8 flex items-center gap-3">
@@ -286,7 +256,6 @@ const clientLogos = [
                 Integridad y Compliance
               </h3>
               <div className="grid sm:grid-cols-2 gap-6">
-                 {/* Mini Cards */}
                  {[
                   { title: "RGPD / GDPR", desc: "Evitamos brechas y sanciones." },
                   { title: "Directiva NIS2", desc: "Resiliencia operativa asegurada." },
@@ -303,7 +272,6 @@ const clientLogos = [
 
             <div className="lg:col-span-6">
               <div className="glass-card h-full p-8 rounded-2xl relative overflow-hidden group">
-                 {/* Efecto de luz al hover */}
                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-[60px] rounded-full group-hover:bg-white/20 transition-all duration-500"></div>
                  
                  <div className="relative z-10">
@@ -318,7 +286,6 @@ const clientLogos = [
                      Empresas e instituciones donde nuestro equipo ha reportado vulnerabilidades críticas o participado en programas de recompensa.
                    </p>
 
-                   {/* LOGOS GRID MEJORADO */}
                    <div className="grid grid-cols-3 gap-4">
                      {clientLogos.slice(0, 6).map((logoUrl, idx) => (
                        <div key={idx} className="aspect-video bg-black/40 rounded border border-white/5 flex items-center justify-center p-3 hover:border-white/20 hover:bg-white/5 transition-all duration-300">
@@ -337,13 +304,12 @@ const clientLogos = [
         </div>
       </section>
 
-      {/* --- SECTION 5: FORMULARIO (Elevado y Minimalista) --- */}
+      {/* --- SECTION 5: FORMULARIO (Mantenido py-32) --- */}
       <section id="application-section" className="py-32 relative">
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           
           {!formSubmitted ? (
             <div className="glass-card rounded-3xl p-10 md:p-14 relative overflow-hidden">
-              {/* Fondo decorativo sutil dentro del form */}
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
               <div className="text-center mb-12">
@@ -417,11 +383,11 @@ const clientLogos = [
         </div>
       </section>
 
-      {/* --- FOOTER --- */}
-      <footer className="py-12 border-t border-white/5 bg-black/40 backdrop-blur-sm relative z-10">
+      {/* --- FOOTER (Aumentado Padding a py-20) --- */}
+      <footer className="py-20 border-t border-white/5 bg-black/40 backdrop-blur-sm relative z-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <img src={wolfLogoUrl} alt="BlackWolf" className="h-6 w-auto" />
+          <div className="flex items-center gap-3 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 bg-transparent">
+            <img src={wolfLogoUrl} alt="BlackWolf" className="h-6 w-auto bg-transparent" />
             <span className="font-josefin font-bold text-lg tracking-[0.2em] text-white">BLACKWOLF</span>
           </div>
           <div className="flex gap-8">
