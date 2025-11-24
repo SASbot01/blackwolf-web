@@ -6,13 +6,15 @@ const BlackWolfLanding = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const REPO_BASE = "/blackwolf-web";
+
   // --- RUTAS CORREGIDAS ---
-  const wolfLogoUrl = "/assets/logo1.png"; 
-  const videoUrl = "/assets/Video_de_Bienvenida_Blackwolf.mp4";
+  const wolfLogoUrl = REPO_BASE + "/assets/logo1.png"; 
+  const videoUrl = REPO_BASE + "/assets/Video_de_Bienvenida_Blackwolf.mp4";
   
   const clientLogos = [
-    "/assets/images/logos/nasa.webp",
-    "/assets/images/logos/uber.webp",
+   REPO_BASE + "/assets/images/logos/nasa.webp",
+   REPO_BASE + "/assets/images/logos/uber.webp",
     "/assets/images/logos/logo-digitaasystems.png",
     "/assets/images/logos/logo-nexustech.png",
     "/assets/images/logos/logo-aurorasystems.png",
