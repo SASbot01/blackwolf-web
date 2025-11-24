@@ -10,7 +10,7 @@ const BlackWolfLanding = () => {
   const REPO_BASE = "/blackwolf-web"; 
 
   // --- RUTAS DE ASSETS ---
-  const wolfLogoUrl = REPO_BASE + "/assets/logo.1.png";
+  const wolfLogoUrl = REPO_BASE + "/assets/logo1.png";
   const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
   
   const clientLogos = [
