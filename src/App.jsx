@@ -6,21 +6,27 @@ const BlackWolfLanding = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const REPO_BASE = "/blackwolf-web";
+// App.jsx (Bloque de rutas corregido)
 
-  // --- RUTAS CORREGIDAS ---
-  const wolfLogoUrl = REPO_BASE + "/assets/logo1.png"; 
-  const videoUrl = REPO_BASE + "/assets/Video_de_Bienvenida_Blackwolf.mp4";
-  
-  const clientLogos = [
-   REPO_BASE + "/assets/images/logos/nasa.webp",
-   REPO_BASE + "/assets/images/logos/uber.webp",
-    "/assets/images/logos/logo-digitaasystems.png",
-    "/assets/images/logos/logo-nexustech.png",
-    "/assets/images/logos/logo-aurorasystems.png",
-    "/assets/images/logos/logo-gridforce.png",
-  ];
+const REPO_BASE = "/blackwolf-web";
 
+// --- RUTAS CORREGIDAS ---
+// Estas rutas DEBEN estar correctas para tus archivos en public/assets/
+const wolfLogoUrl = REPO_BASE + "/assets/logo1.png"; 
+const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
+ 
+const clientLogos = [
+  // Ruta 1 y 2: Correcto
+  REPO_BASE + "/assets/images/logos/nasa.webp",
+  REPO_BASE + "/assets/images/logos/uber.webp",
+ 
+  // Rutas 3, 4, 5 y 6: ¡CORREGIDO! Faltaba REPO_BASE.
+  REPO_BASE + "/assets/images/logos/logo-digitaasystems.png",
+  REPO_BASE + "/assets/images/logos/logo-nexustech.png",
+  REPO_BASE + "/assets/images/logos/logo-aurorasystems.png",
+  REPO_BASE + "/assets/images/logos/logo-gridforce.png",
+];
+// ... El resto del código
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
