@@ -10,12 +10,12 @@ const BlackWolfLanding = () => {
   const REPO_BASE = "/blackwolf-web"; 
 
   // --- RUTAS DE ASSETS ---
-  const wolfLogoUrl = REPO_BASE + "/assets/logo1.png";
+  const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png";
   const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
   
   const clientLogos = [
-    REPO_BASE + "/assets/images/logos/nasa.webp",
-    REPO_BASE + "/assets/images/logos/uber.webp",
+    REPO_BASE + "/assets/images/logos/logo-techcorp.png",
+    REPO_BASE + "/assets/images/logos/logo-finanzaglobal.png",
     REPO_BASE + "/assets/images/logos/logo-digitaasystems.png",
     REPO_BASE + "/assets/images/logos/logo-nexustech.png",
     REPO_BASE + "/assets/images/logos/logo-aurorasystems.png",
@@ -82,6 +82,35 @@ const BlackWolfLanding = () => {
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
           }
 
+          /* Checkbox personalizado */
+          .custom-checkbox {
+            appearance: none;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+          }
+          .custom-checkbox::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+          }
+          .custom-checkbox:checked {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+          }
+          .custom-checkbox:checked::before {
+            transform: scale(1);
+          }
+
           html { scroll-behavior: smooth; }
         `}
       </style>
@@ -103,7 +132,6 @@ const BlackWolfLanding = () => {
           >
             SOLICITAR AUDITORÍA
           </button>
-          {/* Botón móvil simple */}
           <button 
              onClick={() => document.getElementById('application-section').scrollIntoView()}
              className="md:hidden p-2 text-white border border-white/20 rounded-full bg-white/5"
@@ -114,7 +142,6 @@ const BlackWolfLanding = () => {
       </nav>
 
       {/* --- SECTION 1: HERO --- */}
-      {/* Ajustado: flex-col en móvil, grid en desktop. Padding reducido en móvil. */}
       <section className="relative min-h-screen flex flex-col justify-center items-center pt-28 pb-20 md:pt-32 md:pb-32 px-6">
         <div className="max-w-7xl w-full grid lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
           
@@ -124,7 +151,6 @@ const BlackWolfLanding = () => {
                 <span className="w-8 md:w-12 h-[1px] bg-gradient-to-r from-slate-500 to-transparent"></span>
                 Corporate Offensive Security
               </h2>
-              {/* Texto ajustado para móvil (text-4xl) y desktop (text-7xl) */}
               <h1 className="font-josefin font-bold text-4xl sm:text-5xl md:text-7xl leading-[1.1] uppercase tracking-wide">
                 <span className="text-white block mb-2 drop-shadow-2xl">Firma de</span>
                 <span className="text-metallic block">Ciberseguridad Ofensiva</span>
@@ -147,7 +173,6 @@ const BlackWolfLanding = () => {
             </div>
           </div>
 
-          {/* Video en móvil: Se muestra debajo del texto, ancho completo */}
           <div className="lg:col-span-5 relative perspective-1000 group w-full mt-8 lg:mt-0">
             <div className="relative w-full aspect-video bg-black rounded-xl border border-white/10 overflow-hidden shadow-[0_20px_50px_-12px_rgba(0,0,0,1)] transition-all duration-500 group-hover:border-white/30 group-hover:scale-[1.02]">
               <video 
@@ -170,7 +195,6 @@ const BlackWolfLanding = () => {
       </section>
 
       {/* --- SECTION 2: MÉTODO --- */}
-      {/* Móvil: py-20 / Desktop: py-32. Cards apiladas en móvil. */}
       <section className="py-20 md:py-32 relative">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 gap-6 md:gap-8">
@@ -315,7 +339,7 @@ const BlackWolfLanding = () => {
         </div>
       </section>
 
-      {/* --- SECTION 5: FORMULARIO --- */}
+      {/* --- SECTION 5: FORMULARIO (Actualizado con Dominio y Checks) --- */}
       <section id="application-section" className="py-20 md:py-32 relative">
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           
@@ -346,6 +370,11 @@ const BlackWolfLanding = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
+                    {/* CAMPO DE DOMINIO OBLIGATORIO */}
+                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Dominio Corporativo <span className="text-red-500">*</span></label>
+                    <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="ejemplo.com" />
+                  </div>
+                  <div className="space-y-2">
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Industria</label>
                     <select className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm appearance-none">
                       <option>Financiero / Banca</option>
@@ -354,18 +383,39 @@ const BlackWolfLanding = () => {
                       <option>Tecnología</option>
                     </select>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Sede</label>
-                    <input type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Ciudad, País" />
-                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Objetivo</label>
-                  <textarea rows="4" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm resize-none" placeholder="Cumplimiento normativo, incidente reciente, auditoría anual..."></textarea>
+                   <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Sede</label>
+                         <input type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Ciudad, País" />
+                      </div>
+                      <div className="space-y-2">
+                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Objetivo</label>
+                         <input type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Cumplimiento, Auditoría..." />
+                      </div>
+                   </div>
+                </div>
+                
+                {/* CHECKBOXES LEGALES OBLIGATORIOS */}
+                <div className="space-y-4 pt-4 border-t border-white/5">
+                    <div className="flex gap-3 items-start group">
+                        <input required id="auth-check" type="checkbox" className="custom-checkbox w-5 h-5 mt-0.5" />
+                        <label htmlFor="auth-check" className="text-xs text-slate-400 font-inter leading-relaxed cursor-pointer group-hover:text-slate-300 transition-colors">
+                            <span className="text-white font-bold">Autorización de Seguridad:</span> Autorizo expresamente a BlackWolf Intel a realizar un <strong>reconocimiento pasivo y análisis de superficie de ataque no intrusivo</strong> sobre el dominio facilitado. Entiendo que este diagnóstico inicial tiene como único fin detectar brechas de seguridad sin comprometer la operatividad de los sistemas (Safe Harbor).
+                        </label>
+                    </div>
+
+                    <div className="flex gap-3 items-start group">
+                        <input required id="privacy-check" type="checkbox" className="custom-checkbox w-5 h-5 mt-0.5" />
+                        <label htmlFor="privacy-check" className="text-xs text-slate-400 font-inter leading-relaxed cursor-pointer group-hover:text-slate-300 transition-colors">
+                             <span className="text-white font-bold">Confidencialidad y Datos:</span> Acepto que los datos facilitados sean tratados bajo <strong>estricta confidencialidad (NDA implícito)</strong>. BlackWolf se compromete a no compartir información sensible con terceros y a utilizarla exclusivamente para el reporte de seguridad y contacto comercial legítimo.
+                        </label>
+                    </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-6">
                   <button 
                     type="submit" 
                     disabled={isLoading}
