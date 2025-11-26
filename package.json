@@ -2,17 +2,18 @@
   "name": "blackwolf-web",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://SASbot01.github.io/blackwolf-web/",  
+  "homepage": "https://SASbot01.github.io/blackwolf-web/",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",                          
-    "deploy": "gh-pages -d dist"                           
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "lucide-react": "^0.263.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
