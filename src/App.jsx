@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react'; // IMPORTANTE: useRef añadido
 import { Shield, Lock, Satellite, CheckCircle, ArrowRight, Play, FileWarning, Scale, Activity, Zap } from 'lucide-react';
+import emailjs from '@emailjs/browser'; // IMPORTANTE: Librería importada
 
 const BlackWolfLanding = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Referencia al formulario para EmailJS
+  const form = useRef();
 
   // --- RUTA BASE DE GITHUB PAGES ---
   const REPO_BASE = "/blackwolf-web"; 
@@ -33,11 +37,24 @@ const BlackWolfLanding = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setFormSubmitted(true);
-      document.getElementById('application-section').scrollIntoView({ behavior: 'smooth' });
-    }, 1500);
+
+    // --- CONFIGURACIÓN DE EMAILJS ---
+    // REEMPLAZA ESTOS VALORES CON LOS TUYOS DE EMAILJS
+    const SERVICE_ID = 'TU_SERVICE_ID_AQUI';   // Ej: 'service_xyz'
+    const TEMPLATE_ID = 'TU_TEMPLATE_ID_AQUI'; // Ej: 'template_123'
+    const PUBLIC_KEY = 'TU_PUBLIC_KEY_AQUI';   // Ej: 'User_Key_abc'
+
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
+      .then((result) => {
+          console.log('Email enviado:', result.text);
+          setIsLoading(false);
+          setFormSubmitted(true);
+          document.getElementById('application-section').scrollIntoView({ behavior: 'smooth' });
+      }, (error) => {
+          console.log('Error al enviar:', error.text);
+          setIsLoading(false);
+          alert("Hubo un error al enviar la solicitud. Por favor, inténtalo de nuevo.");
+      });
   };
 
   return (
@@ -82,7 +99,6 @@ const BlackWolfLanding = () => {
             box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
           }
 
-          /* Checkbox personalizado */
           .custom-checkbox {
             appearance: none;
             background-color: rgba(0, 0, 0, 0.4);
@@ -356,15 +372,15 @@ const BlackWolfLanding = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleFormSubmit} className="space-y-6">
+              <form ref={form} onSubmit={handleFormSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Nombre</label>
-                    <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Nombre Completo" />
+                    <input required name="user_name" type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Nombre Completo" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Email Corporativo</label>
-                    <input required type="email" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="usuario@empresa.com" />
+                    <input required name="user_email" type="email" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="usuario@empresa.com" />
                   </div>
                 </div>
 
@@ -372,11 +388,11 @@ const BlackWolfLanding = () => {
                   <div className="space-y-2">
                     {/* CAMPO DE DOMINIO OBLIGATORIO */}
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Dominio Corporativo <span className="text-red-500">*</span></label>
-                    <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="ejemplo.com" />
+                    <input required name="domain" type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="ejemplo.com" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Industria</label>
-                    <select className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm appearance-none">
+                    <select name="industry" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm appearance-none">
                       <option>Financiero / Banca</option>
                       <option>Salud / Farma</option>
                       <option>Industrial / Energía</option>
@@ -389,11 +405,11 @@ const BlackWolfLanding = () => {
                    <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                          <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Sede</label>
-                         <input type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Ciudad, País" />
+                         <input name="location" type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Ciudad, País" />
                       </div>
                       <div className="space-y-2">
                          <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest pl-1">Objetivo</label>
-                         <input type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Cumplimiento, Auditoría..." />
+                         <input name="message" type="text" className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/50 focus:bg-black/60 transition-all font-inter text-sm" placeholder="Cumplimiento, Auditoría..." />
                       </div>
                    </div>
                 </div>
