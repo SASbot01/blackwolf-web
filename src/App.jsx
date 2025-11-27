@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Shield, Lock, Satellite, CheckCircle, ArrowRight, Activity, Zap, FileWarning, X, FileText, Scale, Globe } from 'lucide-react';
-import emailjs from '@emailjs/browser';
+// import emailjs from '@emailjs/browser'; // ESTO FUE ELIMINADO PORQUE CAUSABA EL ERROR DE COMPILACIÓN
 
 const BlackWolfLanding = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -135,143 +135,60 @@ const BlackWolfLanding = () => {
       footer: {
         legal: ["Legal", "Privacidad", "Contacto"]
       }
-    },
-    en: {
-      nav: {
-        cta: "REQUEST AUDIT",
-      },
-      hero: {
-        subtitle: "Corporate Offensive Security",
-        title1: "Offensive",
-        title2: "Cybersecurity Firm",
-        title3: "For Critical Environments",
-        desc: <>We protect corporate infrastructures and boardrooms. Our team has reported confirmed vulnerabilities at <span className="text-white font-semibold border-b border-white/30">NASA</span>.</>,
-        button: "Request Assessment",
-        live: "LIVE FEED // ENCRYPTED"
-      },
-      method: {
-        title: "OFFENSIVE",
-        titleHighlight: "ENGINEERING",
-        desc: "We do not use passive defenses. We audit your company with the same technical sophistication used by real attackers.",
-        cards: [
-          { title: "Offensive Detection", text: "We simulate real attack vectors before they are exploited." },
-          { title: "Business Impact", text: "We translate technical vulnerabilities into financial risks." },
-          { title: "Guidance", text: "Reports for C-Level (risk) and technical teams (remediation)." },
-          { title: "Continuous Vigilance", text: "The attack surface changes. So does our vigilance." },
-          { title: "Transparency", text: "Scope, methodology, and deliverables defined by contract." }
-        ],
-        ctaCard: {
-          title: "Would your infrastructure resist?",
-          button: "CONTACT"
-        }
-      },
-      risk: {
-        title: "STRUCTURAL RISK &",
-        titleHighlight: "COMPLIANCE",
-        quote: "\"The cost of compliance is high, but the cost of non-compliance is closure.\"",
-        list1: "Direct liability of administrators (NIS2).",
-        list2: "Regulatory sanctions for leaks (GDPR).",
-        stats: [
-          { num: "24h", label: "Max incident notification deadline (NIS2)." },
-          { num: "4%", label: "Max annual turnover fine (GDPR)." },
-          { num: "ISO", label: "Standards required for tenders." }
-        ],
-        complianceTitle: "Integrity & Compliance",
-        complianceItems: [
-          { title: "GDPR", desc: "We prevent breaches and sanctions." },
-          { title: "NIS2 Directive", desc: "Operational resilience assured." },
-          { title: "Trade Secrets", desc: "Protection of strategic know-how." },
-          { title: "ISO 27001", desc: "Preparation for certification audits." }
-        ],
-        clientsTitle: "Proven Capability",
-        verified: "Verified",
-        clientsDesc: "Companies and institutions where our team has reported critical vulnerabilities or participated in bounty programs."
-      },
-      form: {
-        title: "Request Audit",
-        secure: "Information protected under strict NDA.",
-        labels: {
-          name: "Name",
-          email: "Corporate Email",
-          phone: "Phone",
-          phoneOp: "(optional)",
-          domain: "Corporate Domain",
-          industry: "Industry",
-          location: "HQ Location",
-          objective: "Objective"
-        },
-        placeholders: {
-          name: "Full Name",
-          email: "user@company.com",
-          phone: "+1 555...",
-          domain: "example.com",
-          location: "City, Country",
-          objective: "Compliance, Recent Incident, Audit..."
-        },
-        industries: ["Financial / Banking", "Health / Pharma", "Industrial / Energy", "Technology"],
-        checks: {
-          authTitle: "Security Authorization (Safe Harbor)",
-          authText: "I accept and authorize vulnerability analysis on the provided domain.",
-          authLink: "Read Safe Harbor terms",
-          privTitle: "Confidentiality & NDA",
-          privText: "I accept data processing under professional secrecy.",
-          privLink: "View privacy agreement"
-        },
-        button: "SEND REQUEST",
-        successTitle: "Request Registered",
-        successText: "Our risk analysis team will review your profile and contact you within 24h."
-      },
-      modals: {
-        authTitle: "Safe Harbor Agreement & Authorization",
-        authContent: <>
-          <p><strong>1. OBJECT:</strong> The applicant authorizes BLACKWOLF INTEL to perform passive reconnaissance and attack surface analysis on the provided domain.</p>
-          <p><strong>2. NON-INTRUSIVE:</strong> These maneuvers will be limited to identifying public vulnerabilities. No DoS attacks or alterations will be performed.</p>
-          <p><strong>3. SAFE HARBOR:</strong> The Firm acts under "Ethical Hacking" principles. Findings will not be publicly disclosed. This authorization exempts liability for accessing vulnerable systems within the diagnosis scope.</p>
-        </>,
-        privTitle: "Non-Disclosure Agreement (NDA)",
-        privContent: <>
-          <p><strong>1. CONFIDENTIALITY:</strong> All data and findings are protected under strict Professional Secrecy.</p>
-          <p><strong>2. PROCESSING:</strong> Information will not be shared with third parties. Technical data is stored encrypted.</p>
-          <p><strong>3. ETHICS:</strong> Treating your data with the highest level of security is our business model.</p>
-        </>,
-        button: "Understood"
-      },
-      footer: {
-        legal: ["Legal", "Privacy", "Contact"]
-      }
     }
   };
 
   // Helper para acceder al idioma actual
   const t = content[lang];
-
+  
+  // Hook para cargar la librería de EmailJS y el manejo del scroll
   useEffect(() => {
+    // 1. Manejo del Scroll
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // 2. Carga del CDN de EmailJS
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.removeChild(script);
+    };
   }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // --- CREDENCIALES EMAILJS (PON LAS TUYAS AQUI) ---
-    // NOTA: Para que el correo llegue a alejandro.cto@blackwolfsec.io, debes configurar esta dirección como
-    // la "Destination Email" en la plantilla de EmailJS (Template ID) o en la configuración del servicio.
-    const SERVICE_ID = 'service_5he3zdo'; // <--- DEBES REEMPLAZAR ESTO
-    const TEMPLATE_ID = 'plantilla_jten7cj'; // <--- DEBES REEMPLAZAR ESTO
-    const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; // <--- DEBES REEMPLAZAR ESTO
+    // Verificar si EmailJS se cargó correctamente (debe estar en window)
+    if (typeof window.emailjs === 'undefined') {
+        console.error("EmailJS no está cargado globalmente. Revisa la conexión o el CDN.");
+        setIsLoading(false);
+        alert(lang === 'es' ? "Error al enviar: El servicio de email no está cargado." : "Sending error: Email service is not loaded.");
+        return;
+    }
 
-    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
+    // --- CREDENCIALES EMAILJS (HARDCODED) ---
+    // Claves proporcionadas por el usuario
+    const SERVICE_ID = 'service_5he3zdo'; 
+    const TEMPLATE_ID = 'plantilla_jten7cj'; 
+    const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; 
+
+    window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
           setIsLoading(false);
           setFormSubmitted(true);
           document.getElementById('application-section').scrollIntoView({ behavior: 'smooth' });
       }, (error) => {
+          console.error("Error al enviar el formulario (400 Bad Request):", error);
           setIsLoading(false);
-          alert(lang === 'es' ? "Error al enviar." : "Error sending request.");
+          // Mensaje de error ajustado
+          alert(lang === 'es' ? "Error al enviar: Por favor, verifica la conexión y los IDs en el panel de EmailJS." : "Error sending: Please verify your connection and IDs in the EmailJS panel.");
       });
   };
 
