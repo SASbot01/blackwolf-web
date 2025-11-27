@@ -176,7 +176,7 @@ const BlackWolfLanding = () => {
     // --- CREDENCIALES EMAILJS (HARDCODED) ---
     // Claves proporcionadas por el usuario
     const SERVICE_ID = 'service_5he3zdo'; 
-    const TEMPLATE_ID = 'plantilla_jten7cj'; 
+    const TEMPLATE_ID = 'template_jten7cj'; 
     const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; 
 
     window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
