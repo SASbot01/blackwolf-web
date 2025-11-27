@@ -261,7 +261,7 @@ const BlackWolfLanding = () => {
     // NOTA: Para que el correo llegue a alejandro.cto@blackwolfsec.io, debes configurar esta dirección como
     // la "Destination Email" en la plantilla de EmailJS (Template ID) o en la configuración del servicio.
     const SERVICE_ID = 'service_5he3zdo'; // <--- DEBES REEMPLAZAR ESTO
-    const TEMPLATE_ID = 'template_mimullp'; // <--- DEBES REEMPLAZAR ESTO
+    const TEMPLATE_ID = 'plantilla_jten7cj'; // <--- DEBES REEMPLAZAR ESTO
     const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; // <--- DEBES REEMPLAZAR ESTO
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
