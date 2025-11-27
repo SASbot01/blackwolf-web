@@ -20,13 +20,14 @@ const BlackWolfLanding = () => {
   const wolfLogoUrl = REPO_BASE + "/assets/blackwolf_head_transparent.png";
   const videoUrl = REPO_BASE + "/assets/videos/Video_de_Bienvenida_Blackwolf.mp4";
   
+  const base = window.location.origin + REPO_BASE;
   const clientLogos = [
-    { img: REPO_BASE + "/assets/images/logos/nasa.webp", pdf: REPO_BASE + "/assets/docs/NASA_Report_BlackWolf.pdf", alt: "NASA Vulnerability Report" },
-    { img: REPO_BASE + "/assets/images/logos/uber.webp", pdf: REPO_BASE + "/assets/docs/Uber_Bounty_Report.pdf", alt: "Uber Eats Bounty" },
-    { img: REPO_BASE + "/assets/images/logos/logo-digitaasystems.png", pdf: null },
-    { img: REPO_BASE + "/assets/images/logos/logo-nexustech.png", pdf: null },
-    { img: REPO_BASE + "/assets/images/logos/logo-aurorasystems.png", pdf: null },
-    { img: REPO_BASE + "/assets/images/logos/logo-gridforce.png", pdf: null },
+    { img: base + "/assets/images/logos/nasa.webp", pdf: base + "/assets/docs/NASA_Report_BlackWolf.pdf", alt: "NASA Vulnerability Report" },
+    { img: base + "/assets/images/logos/uber.webp", pdf: base + "/assets/docs/Uber_Bounty_Report.pdf", alt: "Uber Eats Bounty" },
+    { img: base + "/assets/images/logos/isntagram.webp", pdf: base + "/assets/docs/instagram_report.pdf", alt: "Instagram Report" },
+    { img: base + "/assets/images/logos/logo-nexustech.png", pdf: null, alt: "NexusTech" },
+    { img: base + "/assets/images/logos/logo-aurorasystems.png", pdf: null, alt: "Aurora Systems" },
+    { img: base + "/assets/images/logos/logo-gridforce.png", pdf: null, alt: "GridForce" },
   ];
 
   // --- DICCIONARIO DE TRADUCCIONES ---
@@ -257,9 +258,11 @@ const BlackWolfLanding = () => {
     setIsLoading(true);
 
     // --- CREDENCIALES EMAILJS (PON LAS TUYAS AQUI) ---
-    const SERVICE_ID = 'TU_SERVICE_ID';
-    const TEMPLATE_ID = 'TU_TEMPLATE_ID';
-    const PUBLIC_KEY = 'TU_PUBLIC_KEY';
+    // NOTA: Para que el correo llegue a alejandro.cto@blackwolfsec.io, debes configurar esta dirección como
+    // la "Destination Email" en la plantilla de EmailJS (Template ID) o en la configuración del servicio.
+    const SERVICE_ID = 'TU_SERVICE_ID'; // <--- DEBES REEMPLAZAR ESTO
+    const TEMPLATE_ID = 'TU_TEMPLATE_ID'; // <--- DEBES REEMPLAZAR ESTO
+    const PUBLIC_KEY = 'TU_PUBLIC_KEY'; // <--- DEBES REEMPLAZAR ESTO
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
       .then((result) => {
@@ -334,10 +337,7 @@ const BlackWolfLanding = () => {
           </div>
           <div className="flex items-center gap-4">
             {/* BUTTON LANG SWITCH */}
-            <button 
-              onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-              className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-slate-300 transition-colors font-mono text-xs uppercase tracking-widest"
-            >
+            <button onClick={() => setLang(lang === 'es' ? 'en' : 'es')} className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-slate-300 transition-colors font-mono text-xs uppercase tracking-widest">
               <Globe className="w-3 h-3" />
               {lang === 'es' ? 'ES' : 'EN'}
             </button>
@@ -436,7 +436,7 @@ const BlackWolfLanding = () => {
         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[30vw] h-[60vh] bg-slate-800/10 blur-[100px] rounded-full -z-10"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 md:gap-20 items-start md:items-center mb-20 md:mb-24">
-             <div>
+            <div>
               <h2 className="font-josefin font-bold text-3xl md:text-4xl mb-6 md:mb-8 text-white">{t.risk.title} <br/><span className="text-slate-500">{t.risk.titleHighlight}</span></h2>
               <div className="glass-card p-6 md:p-8 rounded-xl border-l-4 border-l-slate-900/50">
                 <p className="font-josefin text-lg md:text-xl text-slate-300 italic mb-6">{t.risk.quote}</p>
@@ -457,7 +457,7 @@ const BlackWolfLanding = () => {
           </div>
 
           <div className="grid lg:grid-cols-12 gap-12 pt-12 border-t border-white/5">
-             <div className="lg:col-span-6">
+            <div className="lg:col-span-6">
               <h3 className="font-josefin text-2xl text-white font-bold mb-8 flex items-center gap-3"><Lock className="w-6 h-6 text-slate-500" />{t.risk.complianceTitle}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                  {t.risk.complianceItems.map((item, i) => (
@@ -479,8 +479,9 @@ const BlackWolfLanding = () => {
                    </div>
                    <p className="text-slate-400 text-sm mb-8">{t.risk.clientsDesc}</p>
                    
+                   {/* MODIFICADO: Solo mostrar las primeras 3 imágenes (0, 3) */}
                    <div className="grid grid-cols-3 gap-4">
-                     {clientLogos.slice(0, 6).map((item, idx) => (
+                     {clientLogos.slice(0, 3).map((item, idx) => ( 
                        <div key={idx} className={`aspect-video bg-black/40 rounded border border-white/5 flex items-center justify-center p-3 transition-all duration-300 ${item.pdf ? 'hover:border-blue-500/50 hover:bg-blue-500/5 cursor-pointer group/link' : 'hover:border-white/20 hover:bg-white/5'}`}>
                          {item.pdf ? (
                             <a href={item.pdf} target="_blank" rel="noopener noreferrer" className="w-full h-full flex items-center justify-center relative">
