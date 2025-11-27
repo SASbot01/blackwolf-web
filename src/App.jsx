@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Shield, Lock, Satellite, CheckCircle, ArrowRight, Activity, Zap, FileWarning, X, FileText, Scale, Globe } from 'lucide-react';
+import { Shield, Lock, Satellite, CheckCircle, ArrowRight, Activity, Zap, FileWarning, X, FileText, Scale, Globe, Calendar } from 'lucide-react';
 // import emailjs from '@emailjs/browser'; // ESTO FUE ELIMINADO PORQUE CAUSABA EL ERROR DE COMPILACIÓN
 
 const BlackWolfLanding = () => {
@@ -12,6 +12,14 @@ const BlackWolfLanding = () => {
   const [lang, setLang] = useState('es'); 
 
   const form = useRef();
+
+  // --- CONFIGURACIÓN DE EMAILJS (MOVIDO AL ÁMBITO GLOBAL DE LA FUNCIÓN) ---
+  const SERVICE_ID = 'service_5he3zdo'; // ID CORRECTO DE TU PANEL
+  const TEMPLATE_ID = 'template_jten7cj'; // ID PROPORCIONADO POR EL USUARIO
+  const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; // CLAVE PÚBLICA PROPORCIONADA
+
+  // --- CONFIGURACIÓN CALENDLY ---
+  const CALENDLY_URL = "https://calendly.com/"; // <--- ¡PON AQUÍ TU ENLACE DE CALENDLY!
 
   // --- RUTA BASE ---
   const REPO_BASE = "/blackwolf-web"; 
@@ -115,7 +123,13 @@ const BlackWolfLanding = () => {
         },
         button: "ENVIAR SOLICITUD",
         successTitle: "Solicitud Registrada",
-        successText: "Nuestro equipo de análisis de riesgo revisará su perfil y contactará en 24h."
+        // El texto aquí es menos relevante ahora que mostramos el bloque de Calendly, pero lo mantenemos por si acaso
+        successText: "Su solicitud ha sido procesada correctamente por nuestro sistema."
+      },
+      calendly: {
+          title: "Siguientes Pasos",
+          text: "Nuestro equipo de expertos necesitará entre 48-72 horas para revisar la seguridad de su empresa. Agende una llamada después del plazo para explicarle cuál es la situación de la seguridad de su empresa.",
+          button: "AGENDAR LLAMADA"
       },
       modals: {
         authTitle: "Acuerdo de Safe Harbor & Autorización",
@@ -138,8 +152,9 @@ const BlackWolfLanding = () => {
     }
   };
 
-  // Helper para acceder al idioma actual
-  const t = content[lang];
+  // Helper para acceder al idioma actual (y fallback básico para EN si se necesitara, aunque aquí duplicamos ES para simplificar este ejemplo rápido)
+  // En producción deberías tener la estructura completa de 'en' también.
+  const t = content[lang] || content['es'];
   
   // Hook para cargar la librería de EmailJS y el manejo del scroll
   useEffect(() => {
@@ -153,6 +168,13 @@ const BlackWolfLanding = () => {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
     script.async = true;
+    script.onload = () => {
+        if (window.emailjs) {
+            // Inicialización forzada de la clave pública tras cargar el CDN
+            // Esto asegura que PUBLIC_KEY (user_id) siempre se envíe correctamente.
+            window.emailjs.init(PUBLIC_KEY);
+        }
+    };
     document.body.appendChild(script);
 
     return () => {
@@ -173,13 +195,9 @@ const BlackWolfLanding = () => {
         return;
     }
 
-    // --- CREDENCIALES EMAILJS (HARDCODED) ---
-    // Claves proporcionadas por el usuario
-    const SERVICE_ID = 'service_5he3zdo'; 
-    const TEMPLATE_ID = 'template_jten7cj'; 
-    const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; 
-
-    window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current, PUBLIC_KEY)
+    // Al haber inicializado la clave pública en el useEffect (window.emailjs.init(PUBLIC_KEY);)
+    // solo necesitamos pasar el Service ID y el Template ID. Esto simplifica la llamada y mejora la fiabilidad.
+    window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current)
       .then((result) => {
           setIsLoading(false);
           setFormSubmitted(true);
@@ -187,8 +205,8 @@ const BlackWolfLanding = () => {
       }, (error) => {
           console.error("Error al enviar el formulario (400 Bad Request):", error);
           setIsLoading(false);
-          // Mensaje de error ajustado
-          alert(lang === 'es' ? "Error al enviar: Por favor, verifica la conexión y los IDs en el panel de EmailJS." : "Error sending: Please verify your connection and IDs in the EmailJS panel.");
+          // MENSAJE CORREGIDO PARA INDICAR EL PROBLEMA EXACTO DEL DESTINATARIO
+          alert(lang === 'es' ? `Error al enviar: El destino del correo está vacío. Por favor, ve a EmailJS, abre la plantilla con ID '${TEMPLATE_ID}' y configura el campo 'Para enviar por correo electrónico' (To email) con tu dirección.` : "Error sending: The template is missing the recipient address. Please go to EmailJS, open the template and configure the 'To email' field with your address.");
       });
   };
 
@@ -504,6 +522,28 @@ const BlackWolfLanding = () => {
               </div>
               <h2 className="font-josefin font-bold text-xl md:text-2xl text-white mb-4">{t.form.successTitle}</h2>
               <p className="font-inter text-slate-400 text-sm max-w-md mx-auto mb-8">{t.form.successText}</p>
+              
+              {/* --- BLOQUE DE CALENDLY (ESTILO MODAL/LEGAL) --- */}
+              <div className="max-w-xl mx-auto bg-slate-900/50 border border-white/10 rounded-xl p-6 text-left mb-8 backdrop-blur-sm relative overflow-hidden group hover:border-white/20 transition-all">
+                  {/* Decoración de fondo */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -z-10"></div>
+                  
+                  <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                      <Calendar className="w-5 h-5 text-blue-400" />
+                      <h3 className="font-josefin font-bold text-white uppercase tracking-widest text-sm">{t.calendly.title}</h3>
+                  </div>
+                  
+                  <p className="font-inter text-slate-300 text-sm leading-relaxed mb-6">
+                    {t.calendly.text}
+                  </p>
+                  
+                  <div className="flex justify-end">
+                      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-white text-black font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-200 transition-colors flex items-center gap-2">
+                        {t.calendly.button} <ArrowRight className="w-3 h-3" />
+                      </a>
+                  </div>
+              </div>
+
               <div className="w-full h-px bg-white/10 max-w-xs mx-auto mb-8"></div>
               <p className="font-mono text-[10px] text-slate-600 uppercase tracking-widest">BlackWolf Security Ops</p>
             </div>
