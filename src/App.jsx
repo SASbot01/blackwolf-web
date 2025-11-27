@@ -19,7 +19,8 @@ const BlackWolfLanding = () => {
   const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; // CLAVE PÚBLICA PROPORCIONADA
 
   // --- CONFIGURACIÓN CALENDLY ---
-  const CALENDLY_URL = "https://calendly.com/"; // <--- ¡PON AQUÍ TU ENLACE DE CALENDLY!
+  // ¡OJO! Cambia esto por tu enlace real de evento, ej: "https://calendly.com/blackwolf-sec/auditoria"
+  const CALENDLY_URL = "https://calendly.com/"; 
 
   // --- RUTA BASE ---
   const REPO_BASE = "/blackwolf-web"; 
@@ -123,13 +124,11 @@ const BlackWolfLanding = () => {
         },
         button: "ENVIAR SOLICITUD",
         successTitle: "Solicitud Registrada",
-        // El texto aquí es menos relevante ahora que mostramos el bloque de Calendly, pero lo mantenemos por si acaso
         successText: "Su solicitud ha sido procesada correctamente por nuestro sistema."
       },
       calendly: {
           title: "Siguientes Pasos",
-          text: "Nuestro equipo de expertos necesitará entre 48-72 horas para revisar la seguridad de su empresa. Agende una llamada después del plazo para explicarle cuál es la situación de la seguridad de su empresa.",
-          button: "AGENDAR LLAMADA"
+          text: "Nuestro equipo de expertos necesitará entre 48-72 horas para revisar la seguridad de su empresa. Por favor, utilice el calendario a continuación para agendar la llamada de presentación de resultados una vez finalizado ese plazo.",
       },
       modals: {
         authTitle: "Acuerdo de Safe Harbor & Autorización",
@@ -152,61 +151,81 @@ const BlackWolfLanding = () => {
     }
   };
 
-  // Helper para acceder al idioma actual (y fallback básico para EN si se necesitara, aunque aquí duplicamos ES para simplificar este ejemplo rápido)
-  // En producción deberías tener la estructura completa de 'en' también.
   const t = content[lang] || content['es'];
   
-  // Hook para cargar la librería de EmailJS y el manejo del scroll
+  // Hook para cargar librerías externas (EmailJS y Calendly)
   useEffect(() => {
-    // 1. Manejo del Scroll
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
 
-    // 2. Carga del CDN de EmailJS
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-    script.async = true;
-    script.onload = () => {
+    // 1. Carga del CDN de EmailJS
+    const scriptEmail = document.createElement('script');
+    scriptEmail.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+    scriptEmail.async = true;
+    scriptEmail.onload = () => {
         if (window.emailjs) {
-            // Inicialización forzada de la clave pública tras cargar el CDN
-            // Esto asegura que PUBLIC_KEY (user_id) siempre se envíe correctamente.
             window.emailjs.init(PUBLIC_KEY);
         }
     };
-    document.body.appendChild(script);
+    document.body.appendChild(scriptEmail);
+
+    // 2. Carga de CSS de Calendly
+    const linkCalCss = document.createElement('link');
+    linkCalCss.href = "https://assets.calendly.com/assets/external/widget.css";
+    linkCalCss.rel = "stylesheet";
+    document.head.appendChild(linkCalCss);
+
+    // 3. Carga de JS de Calendly
+    const scriptCalJs = document.createElement('script');
+    scriptCalJs.src = "https://assets.calendly.com/assets/external/widget.js";
+    scriptCalJs.async = true;
+    document.body.appendChild(scriptCalJs);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      document.body.removeChild(script);
+      document.body.removeChild(scriptEmail);
+      document.body.removeChild(scriptCalJs);
+      document.head.removeChild(linkCalCss);
     };
   }, []);
+
+  // Efecto para inicializar el widget de Calendly cuando se muestra el formulario de éxito
+  useEffect(() => {
+    if (formSubmitted && window.Calendly) {
+        // Pequeño timeout para asegurar que el DOM se ha renderizado
+        setTimeout(() => {
+            window.Calendly.initInlineWidget({
+                url: CALENDLY_URL,
+                parentElement: document.getElementById('calendly-embed'),
+                prefill: {},
+                utm: {}
+            });
+        }, 500);
+    }
+  }, [formSubmitted]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Verificar si EmailJS se cargó correctamente (debe estar en window)
     if (typeof window.emailjs === 'undefined') {
-        console.error("EmailJS no está cargado globalmente. Revisa la conexión o el CDN.");
+        console.error("EmailJS no está cargado.");
         setIsLoading(false);
         alert(lang === 'es' ? "Error al enviar: El servicio de email no está cargado." : "Sending error: Email service is not loaded.");
         return;
     }
 
-    // Al haber inicializado la clave pública en el useEffect (window.emailjs.init(PUBLIC_KEY);)
-    // solo necesitamos pasar el Service ID y el Template ID. Esto simplifica la llamada y mejora la fiabilidad.
     window.emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, form.current)
       .then((result) => {
           setIsLoading(false);
           setFormSubmitted(true);
           document.getElementById('application-section').scrollIntoView({ behavior: 'smooth' });
       }, (error) => {
-          console.error("Error al enviar el formulario (400 Bad Request):", error);
+          console.error("Error al enviar el formulario:", error);
           setIsLoading(false);
-          // MENSAJE CORREGIDO PARA INDICAR EL PROBLEMA EXACTO DEL DESTINATARIO
-          alert(lang === 'es' ? `Error al enviar: El destino del correo está vacío. Por favor, ve a EmailJS, abre la plantilla con ID '${TEMPLATE_ID}' y configura el campo 'Para enviar por correo electrónico' (To email) con tu dirección.` : "Error sending: The template is missing the recipient address. Please go to EmailJS, open the template and configure the 'To email' field with your address.");
+          alert(lang === 'es' ? `Error al enviar: El destino del correo está vacío. Por favor, ve a EmailJS, abre la plantilla con ID '${TEMPLATE_ID}' y configura el campo 'Para enviar por correo electrónico' (To email) con tu dirección.` : "Error sending: The template is missing the recipient address.");
       });
   };
 
@@ -516,36 +535,34 @@ const BlackWolfLanding = () => {
               </form>
             </div>
           ) : (
-            <div className="glass-card rounded-3xl p-10 md:p-16 text-center shadow-2xl animate-fade-in">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 border border-green-500/20">
-                <CheckCircle className="w-8 h-8 md:w-10 md:h-10 text-green-400" />
+            <div className="glass-card rounded-3xl p-6 md:p-10 text-center shadow-2xl animate-fade-in w-full max-w-4xl mx-auto">
+              <div className="flex flex-col items-center mb-6">
+                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center border border-green-500/20 mb-4">
+                  <CheckCircle className="w-8 h-8 text-green-400" />
+                </div>
+                <h2 className="font-josefin font-bold text-2xl text-white mb-2">{t.form.successTitle}</h2>
+                <p className="font-inter text-slate-400 text-sm mb-4">{t.form.successText}</p>
               </div>
-              <h2 className="font-josefin font-bold text-xl md:text-2xl text-white mb-4">{t.form.successTitle}</h2>
-              <p className="font-inter text-slate-400 text-sm max-w-md mx-auto mb-8">{t.form.successText}</p>
-              
-              {/* --- BLOQUE DE CALENDLY (ESTILO MODAL/LEGAL) --- */}
-              <div className="max-w-xl mx-auto bg-slate-900/50 border border-white/10 rounded-xl p-6 text-left mb-8 backdrop-blur-sm relative overflow-hidden group hover:border-white/20 transition-all">
-                  {/* Decoración de fondo */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -z-10"></div>
-                  
-                  <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+
+              <div className="w-full h-px bg-white/10 mb-8"></div>
+
+              {/* --- CONTENEDOR DE CALENDLY INLINE --- */}
+              <div className="w-full text-left">
+                  <div className="flex items-center gap-3 mb-4">
                       <Calendar className="w-5 h-5 text-blue-400" />
                       <h3 className="font-josefin font-bold text-white uppercase tracking-widest text-sm">{t.calendly.title}</h3>
                   </div>
-                  
                   <p className="font-inter text-slate-300 text-sm leading-relaxed mb-6">
                     {t.calendly.text}
                   </p>
                   
-                  <div className="flex justify-end">
-                      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-white text-black font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-200 transition-colors flex items-center gap-2">
-                        {t.calendly.button} <ArrowRight className="w-3 h-3" />
-                      </a>
-                  </div>
+                  {/* El widget se renderizará aquí. Altura ajustada para el widget. */}
+                  <div 
+                    id="calendly-embed" 
+                    className="w-full rounded-xl overflow-hidden border border-white/10 bg-white/5" 
+                    style={{ minHeight: '700px' }}
+                  ></div>
               </div>
-
-              <div className="w-full h-px bg-white/10 max-w-xs mx-auto mb-8"></div>
-              <p className="font-mono text-[10px] text-slate-600 uppercase tracking-widest">BlackWolf Security Ops</p>
             </div>
           )}
         </div>
