@@ -19,8 +19,8 @@ const BlackWolfLanding = () => {
   const PUBLIC_KEY = 'Bi1JTPlVrUxDqibOc'; // CLAVE PÚBLICA PROPORCIONADA
 
   // --- CONFIGURACIÓN CALENDLY ---
-  // ¡OJO! Cambia esto por tu enlace real de evento, ej: "https://calendly.com/blackwolf-sec/auditoria"
-  const CALENDLY_URL = "https://calendly.com/"; 
+  // Enlace directo
+  const CALENDLY_URL = "https://calendly.com/alex-ceo-blackwolfsec/30min"; 
 
   // --- RUTA BASE ---
   const REPO_BASE = "/blackwolf-web"; 
@@ -39,7 +39,7 @@ const BlackWolfLanding = () => {
     { img: base + "/assets/images/logos/logo-gridforce.png", pdf: null, alt: "GridForce" },
   ];
 
-  // --- DICCIONARIO DE TRADUCCIONES ---
+  // --- DICCIONARIO DE TRADUCCIONES COMPLETO ---
   const content = {
     es: {
       nav: {
@@ -50,7 +50,7 @@ const BlackWolfLanding = () => {
         title1: "Firma de",
         title2: "Ciberseguridad Ofensiva",
         title3: "Para Entornos Críticos",
-        desc: <>Protegemos infraestructuras corporativas y consejos de administración. Nuestro equipo ha reportado vulnerabilidades confirmadas en la <span className="text-white font-semibold border-b border-white/30">NASA</span>.</>,
+        desc: "Protegemos diferentes estructuras empresariales adaptándonos a vuestros sistemas.",
         button: "Solicitar Evaluación",
         live: "LIVE FEED // ENCRYPTED"
       },
@@ -128,7 +128,8 @@ const BlackWolfLanding = () => {
       },
       calendly: {
           title: "Siguientes Pasos",
-          text: "Nuestro equipo de expertos necesitará entre 48-72 horas para revisar la seguridad de su empresa. Por favor, utilice el calendario a continuación para agendar la llamada de presentación de resultados una vez finalizado ese plazo.",
+          text: "Nuestro equipo de expertos necesitará entre 48-72 horas para revisar la seguridad de su empresa. Por favor, haga clic en el botón a continuación para agendar la llamada de presentación de resultados una vez finalizado ese plazo.",
+          button: "AGENDAR LLAMADA"
       },
       modals: {
         authTitle: "Acuerdo de Safe Harbor & Autorización",
@@ -148,12 +149,121 @@ const BlackWolfLanding = () => {
       footer: {
         legal: ["Legal", "Privacidad", "Contacto"]
       }
+    },
+    en: {
+      nav: {
+        cta: "REQUEST AUDIT",
+      },
+      hero: {
+        subtitle: "Corporate Offensive Security",
+        title1: "Firm of",
+        title2: "Offensive Cybersecurity",
+        title3: "For Critical Environments",
+        desc: "We protect diverse corporate structures by adapting to your systems.",
+        button: "Request Assessment",
+        live: "LIVE FEED // ENCRYPTED"
+      },
+      method: {
+        title: "OFFENSIVE",
+        titleHighlight: "ENGINEERING",
+        desc: "We do not use passive defenses. We audit your company with the same technical sophistication used by real attackers.",
+        cards: [
+          { title: "Offensive Detection", text: "We simulate real attack vectors before they are exploited." },
+          { title: "Business Impact", text: "We translate technical vulnerabilities into financial risks." },
+          { title: "Guidance", text: "Reports for C-Level (risk) and technical teams (remediation)." },
+          { title: "Continuous Surveillance", text: "The attack surface changes. So does our surveillance." },
+          { title: "Transparency", text: "Scope, methodology, and deliverables defined by contract." }
+        ],
+        ctaCard: {
+          title: "Would your infrastructure withstand it?",
+          button: "CONTACT"
+        }
+      },
+      risk: {
+        title: "STRUCTURAL RISK AND",
+        titleHighlight: "COMPLIANCE",
+        quote: "\"The cost of compliance is high, but the cost of non-compliance is closure.\"",
+        list1: "Direct liability of administrators (NIS2).",
+        list2: "Regulatory sanctions for leaks (GDPR).",
+        stats: [
+          { num: "24h", label: "Max incident notification period (NIS2)." },
+          { num: "4%", label: "Max penalty annual turnover (GDPR)." },
+          { num: "ISO", label: "Standards required for tenders." }
+        ],
+        complianceTitle: "Integrity and Compliance",
+        complianceItems: [
+          { title: "RGPD / GDPR", desc: "We avoid breaches and sanctions." },
+          { title: "NIS2 Directive", desc: "Operational resilience assured." },
+          { title: "Secrets", desc: "Protection of strategic know-how." },
+          { title: "ISO 27001", desc: "Preparation for audits." }
+        ],
+        clientsTitle: "Proven Capability",
+        verified: "Verified",
+        clientsDesc: "Companies and institutions where our team has reported critical vulnerabilities or participated in bounty programs."
+      },
+      form: {
+        title: "Request Audit",
+        secure: "Information protected under strict NDA.",
+        labels: {
+          name: "Name",
+          email: "Corporate Email",
+          phone: "Phone",
+          phoneOp: "(optional)",
+          domain: "Corporate Domain",
+          industry: "Industry",
+          location: "Headquarters",
+          objective: "Objective"
+        },
+        placeholders: {
+          name: "Full Name",
+          email: "user@company.com",
+          phone: "+1 555...",
+          domain: "example.com",
+          location: "City, Country",
+          objective: "Compliance, Audit..."
+        },
+        industries: ["Financial / Banking", "Health / Pharma", "Industrial / Energy", "Technology"],
+        checks: {
+          authTitle: "Security Authorization (Safe Harbor)",
+          authText: "I accept and authorize vulnerability analysis on the provided domain.",
+          authLink: "Read Safe Harbor terms",
+          privTitle: "Confidentiality and NDA",
+          privText: "I accept data processing under professional secrecy.",
+          privLink: "View privacy agreement"
+        },
+        button: "SEND REQUEST",
+        successTitle: "Request Registered",
+        successText: "Your request has been successfully processed by our system."
+      },
+      calendly: {
+          title: "Next Steps",
+          text: "Our team of experts will need 48-72 hours to review your company's security. Please click the button below to schedule the results presentation call once that period is over.",
+          button: "SCHEDULE CALL"
+      },
+      modals: {
+        authTitle: "Safe Harbor Agreement & Authorization",
+        authContent: <>
+          <p><strong>1. OBJECT:</strong> By hereby, the applicant authorizes BLACKWOLF INTEL to perform passive reconnaissance maneuvers and attack surface analysis on the provided domain.</p>
+          <p><strong>2. NON-INTRUSIVE:</strong> These maneuvers will be limited to identifying public vulnerabilities. No Denial of Service (DoS) attacks or alterations will be performed.</p>
+          <p><strong>3. SAFE HARBOR:</strong> The Firm acts under "Ethical Hacking" principles. Findings will not be publicly disclosed. This authorization exempts liability for accessing vulnerable systems within the diagnosis.</p>
+        </>,
+        privTitle: "Non-Disclosure Agreement (NDA)",
+        privContent: <>
+          <p><strong>1. CONFIDENTIALITY:</strong> All data and findings are protected under strict Professional Secrecy.</p>
+          <p><strong>2. PROCESSING:</strong> Information will not be shared with third parties. Technical data is stored encrypted.</p>
+          <p><strong>3. ETHICS:</strong> Treating your data with the highest level of security is our business model.</p>
+        </>,
+        button: "Understood"
+      },
+      footer: {
+        legal: ["Legal", "Privacy", "Contact"]
+      }
     }
   };
 
   const t = content[lang] || content['es'];
   
-  // Hook para cargar librerías externas (EmailJS y Calendly)
+  // Hook para cargar librerías externas (Solo EmailJS ahora)
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -171,40 +281,13 @@ const BlackWolfLanding = () => {
     };
     document.body.appendChild(scriptEmail);
 
-    // 2. Carga de CSS de Calendly
-    const linkCalCss = document.createElement('link');
-    linkCalCss.href = "https://assets.calendly.com/assets/external/widget.css";
-    linkCalCss.rel = "stylesheet";
-    document.head.appendChild(linkCalCss);
-
-    // 3. Carga de JS de Calendly
-    const scriptCalJs = document.createElement('script');
-    scriptCalJs.src = "https://assets.calendly.com/assets/external/widget.js";
-    scriptCalJs.async = true;
-    document.body.appendChild(scriptCalJs);
+    // NOTA: Eliminamos la carga de scripts de Calendly porque usaremos un enlace directo
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       document.body.removeChild(scriptEmail);
-      document.body.removeChild(scriptCalJs);
-      document.head.removeChild(linkCalCss);
     };
   }, []);
-
-  // Efecto para inicializar el widget de Calendly cuando se muestra el formulario de éxito
-  useEffect(() => {
-    if (formSubmitted && window.Calendly) {
-        // Pequeño timeout para asegurar que el DOM se ha renderizado
-        setTimeout(() => {
-            window.Calendly.initInlineWidget({
-                url: CALENDLY_URL,
-                parentElement: document.getElementById('calendly-embed'),
-                prefill: {},
-                utm: {}
-            });
-        }, 500);
-    }
-  }, [formSubmitted]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -546,22 +629,25 @@ const BlackWolfLanding = () => {
 
               <div className="w-full h-px bg-white/10 mb-8"></div>
 
-              {/* --- CONTENEDOR DE CALENDLY INLINE --- */}
-              <div className="w-full text-left">
-                  <div className="flex items-center gap-3 mb-4">
+              {/* --- CONTENEDOR DE CALENDLY (ESTILO MODAL/LEGAL) --- */}
+              <div className="max-w-xl mx-auto bg-slate-900/50 border border-white/10 rounded-xl p-6 text-left mb-8 backdrop-blur-sm relative overflow-hidden group hover:border-white/20 transition-all">
+                  {/* Decoración de fondo */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -z-10"></div>
+                  
+                  <div className="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
                       <Calendar className="w-5 h-5 text-blue-400" />
                       <h3 className="font-josefin font-bold text-white uppercase tracking-widest text-sm">{t.calendly.title}</h3>
                   </div>
+                  
                   <p className="font-inter text-slate-300 text-sm leading-relaxed mb-6">
                     {t.calendly.text}
                   </p>
                   
-                  {/* El widget se renderizará aquí. Altura ajustada para el widget. */}
-                  <div 
-                    id="calendly-embed" 
-                    className="w-full rounded-xl overflow-hidden border border-white/10 bg-white/5" 
-                    style={{ minHeight: '700px' }}
-                  ></div>
+                  <div className="flex justify-end">
+                      <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-white text-black font-bold text-xs uppercase tracking-widest rounded hover:bg-slate-200 transition-colors flex items-center gap-2">
+                        {t.calendly.button} <ArrowRight className="w-3 h-3" />
+                      </a>
+                  </div>
               </div>
             </div>
           )}
